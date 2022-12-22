@@ -1,0 +1,4 @@
+libopenrawgnome.so.7 libopenrawgnome7 #MINVER#
+ or_gdkpixbuf_extract_rotated_thumbnail@Base 0.0.9-3.9
+ or_gdkpixbuf_extract_thumbnail@Base 0.0.9-3.9
+ or_thumbnail_to_pixbuf@Base 0.0.9-3.9

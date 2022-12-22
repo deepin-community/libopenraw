@@ -1,0 +1,24 @@
+Description: don't use /etc/hosts for a file read test
+ This file is no longer guaranteed to exist.  Also, pretty much any conffile
+ is not guaranteed either.  However, the file's contents doesn't matter, only
+ requirement is for it to be readable and be at least 10 bytes long.
+ .
+ So let's use /bin/sh, that's present on any POSIX system.
+Author: Adam Borowski <kilobyte@angband.pl>
+Bug-Debian: https://bugs.debian.org/885963
+
+--- libopenraw-0.0.9.orig/test/fileio.t.c
++++ libopenraw-0.0.9/test/fileio.t.c
+@@ -33,10 +33,10 @@ int main (int argc, char **argv)
+ 	(void)argc;
+ 	(void)argv;
+ 
+-	f = raw_open(get_default_io_methods(), "/etc/hosts", O_RDONLY);
++	f = raw_open(get_default_io_methods(), "/bin/sh", O_RDONLY);
+ 
+ 	if (f == NULL) {
+-		fprintf(stderr, "failed to open /etc/hosts\n");
++		fprintf(stderr, "failed to open /bin/sh\n");
+ 		return 1;
+ 	}
+ 	fprintf(stderr, "error code is %d\n", raw_get_error(f));

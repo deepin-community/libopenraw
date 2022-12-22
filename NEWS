@@ -1,0 +1,316 @@
+libopenraw 0.1.2 - 2017/04/17
+
+New features:
+
+  Camera support:
+  [ a * denote that WB coefficients have been included ]
+
+  - Support for Canon 77D / 9000D, EOS-M6.
+  - Added aliases Canon Rebel T1i / Kiss X3 for 500D, Rebel XSi for 450D,
+    Kiss Digital N for 350D.
+  - Properly recognize Canon Rebel T7i.
+  - Support for Pentax KP (DNG).
+
+Bug fixes:
+
+  - Properly identify DNG converted files as generic DNG.
+  - Don't crash on some malformed files.
+
+Internal changes:
+
+  - Replace Debug::Trace with LOGXXX().
+  - Use Option<> whenever it is appropriate.
+  - Check when loading an IfdEntry that it doesn't got past
+    the container size.
+
+libopenraw 0.1.1 - 2017/03/18
+
+New features:
+
+  Camera support:
+  [ a * denote that WB coefficients have been included ]
+
+  - Support for Canon G5X*, G7X MkII, G9X*, G9X MkII, EOS-M3*, EOS-M5, EOS-M10*,
+    1DX MkII*, 5D MkIV*, 750D*, 760D*, 80D*, Rebel T7i/800D, Rebel T5/1200D*,
+    Rebel T6/1300D*.
+  - Support for Leica M10 and Leica SL (Typ 601).
+  - Support for Nikon D3400, D5*, D500*, D5600, 1 S2*, 1 J4*, 1 AW1*.
+  - Support for Fujifilm GFX 50S, X100F, X70*, X-A2*, X-A3, X-E2S*, X-Pro2*, X-T2, X-T20.
+  - Support for  Sony A99II, A7R2*,  A6300* and A6500,  RX1RM2*, RX10,
+    RX10M2, RX10M3, RX100M4*, RX100M5.
+  - Support for Panasonic FZ2500, G80/G85, GH5, GX8*, GX80/GX85, GX850, LX10/LX15,
+    ZS100.
+  - Support for XIAOYI M1.
+  - Support for Olympus E-M10*, E-M10 MkII*, E-M1 MkII, PEN-F*, XZ-10*, TG-4*, SH-2*.
+  - Support for Pentax K-1 (PEF & DNG)*, K-S1 (DNG), K-S2 (PEF)*, K-70 (PEF & DNG) and
+    Pentax Q-S1 (DNG)
+  - Support for Apple iPhone 6S+* and 7+*
+
+  - Coefficients for Canon G3X, 70D, 100D
+  - Coefficients for Nikon D3300, D5300, D5500, D7200, D810, 1 V3, 1 J5
+  - Coefficients for Olympus E-M5II
+  - Coefficients for Fujifilm X100T, X-A1
+
+Bug fixes:
+
+  - Updated coefficients for:
+    - Sony A99, RX100, RX100M2, RX100M3,  RX1R, RX1R
+    - Nikon D3200
+  - Bug 98929 - fix endian detection on FreeBSD.
+  - Bug 99927 - fix build with various libjpeg.
+  - Bug 54034 - NEF: don't crash with D90 files and similar.
+  - Do not abort when ecountering some unpacking errors.
+  - Do not crash on RAF file not found.
+  - Do not crash on unterminated string value (Pentax Q-S1 DNG)
+
+Internal changes:
+
+  - Added misc/release.sh to help releasing.
+  - More use of std::unique_ptr<> instead of raw pointers.
+  - Added Nikon D90 and D300 to the testsuite.
+
+libopenraw 0.1.0 - 2016/11/27
+
+New features:
+
+  - Require C++11
+  - Colour Matrices support and calibration illuminant.
+  - Custom CFA pattern support.
+  - Grayscale LinearRaw decoding.
+  - API: or_rawdata_get_rendered_image()
+  - API: or_rawdata_set_cfa_pattern()
+  - API: mark deprecated APIs.
+  - API: or_rawdata_get_roi() to get the region of interest from the
+    RAW data.
+  - API: or_rawdata_get_minmax() replaced by or_rawdata_get_levels().
+  - API: or_cfapattern_set_size(), or_cfapattern_get_type() and
+    or_cfapattern_get_pattern()
+  - API: or_rawdata_get_cfa_pattern_type(). Changed or_rawdata_get_cfa_pattern()
+  - API: or_rawdata_get_compression()
+  - API: or_rawdata_get_colourmatrix1()
+  - API: or_rawfile_get_thumbnail_sizes()
+  - API: or_rawfile_get_calibration_illuminant1() and
+    or_rawfile_get_calibration_illuminant2()
+  - API: or_rawfile_get_metavalue()
+  - API: or_metavalue_get_string()
+  - API: removed C++ public headers.
+  - ordiag now uses the public C APIs.
+  - Get the default crop in CR2, CRW and DNG.
+  - make dist make a bzip2 archive too (build only).
+  - New demo ppmload to create a ppm out of the demosaicized image.
+  - Support (partially) PEF from Pentax K-r, K-5, K-7,
+    K-x (unconfirmed), 645D, *-ist DS, K200D, K5 II s.
+  - Support for Olympus ORF big-endian files and "RS" (12-bits).
+    Added E-P2, E-P3, E-PL1, E-PL2, E-PL3, E-PL5, E-PL6, E-PL7,
+    E-PM1, E-PM2,
+    E-620, E-M5, E-M5 II, XZ-1, XZ-2 and Stylus 1.
+    Olympus ORF decompression.
+  - Support extracting previews from ORF MakerNote.
+  - Support for Canon G12, G15, G16, 600D, 1100D/Rebel T3, PowerShot S90,
+    PowerShot S95, Rebel XS, PowerShot S100, PowerShot S110,
+    PowerShot G1 X, PowerShot G7 X, 1D X, 5DMkIII,
+    Rebel T4i/650D, 6D, EOS-M, PowerShot SX50 HS, 70D
+    7DMkII, PowerShot G1 X MkII, Rebel T6, Rebel T6s, 5DS R.
+  - Support make and model metadata from CRW.
+  - API: Canon camera ID have aliases.
+  - Support for Nikon D4, D3100, D3200, D3300, D5000, D5100, D5200,
+    D5300, D5500, D7000, D7100, D7200,
+    J1, J2, J3, J5, S1, V1, V2, V3, Coolpix A,
+    D3S, D3X, D300S, D600, D610, D700, D750, D800, D800E, D810,
+    D90, D60, Df, D4S,
+    Coolpix E5400, E5700, E8400.
+  - Added support for Sony A-380, A-390, A-560, A-580, A-850, A-900,
+    SLT-A33, SLT-A35, SLT-A55, SLT-A57, SLT-A58, SLT-A65, SLT-A77,
+    SLT-A99,
+    Nex-3, Nex-5, Nex-5N, Nex-5R, Nex-5T, Nex-6, Nex-C3, Nex-F3, Nex-7,
+    RX-1, RX-1R, RX-100, RX-100M2, RX-100M3, A7, A7R, A3000, A6000.
+  - Extract compressed raw from ARW (but A-100).
+  - Support for DNG from Pentax Q, Q7, K-r, K-x, K200D, K-01, K-30,
+    K-5 II s, MX-1, K-3, K-50, K-500 ;
+    Leica M9, M Monochrom, M (typ 240), S2, X2, X-Vario, T (typ 701),
+    X (typ 113), Q (typ 116);
+    Ricoh GXR
+  - Support for Nikon NRW: P6000, P7000, P7100 and P7700 (partial).
+  - Support for Panasonic RAW and RW2.
+  - Support for FujiFilm RAF.
+  - Support for Epson R-D1s.
+  - Support Exif from Minolta MRW.
+  - ordiag
+    - Nicer display of the type ID in ordiag.
+    - Display make and model.
+
+Bug fixes:
+
+  - API: or_rawfile_get_rendered_image() returns a ORBitmapDataRef with
+    the correct dimensions.
+    + corrected the Gdk support for above change.
+  - Bug 24088 - Check for get_current_dir_name().
+  - Don't crash when the files can't be written in the testsuite bootstrap.
+  - Bug 26618 - Detect that ORF file are compressed if they are.
+  - Bug 25464 - Skip compressed CFA when rendering the image.
+  - Accept YCbCr when the compression is JPEG. The K10D DNG should now have
+    the large size preview.
+  - Bug 54034 - Implement decompression for D90 and other Lossy14Bits.
+  - Fix some little-endian NEF decoding bugs.
+  - Bug 69432 - Rename .pc to libopenraw-0.1.pc
+  - Bug 74786 - Propagate the boost includes. Replace INCLUDES by
+    AM_CPPFLAGS
+  - Bug 72270 - Don't load RGB8 thumbnails from CR2
+  - Bug 70699 - Header guards violated C standard.
+  - Fixed variuos overflow, in CRW decompress, ORF decompress,
+    CR2 slice parsing
+  - Fixed memory leak in or_gdkpixbuf_extract_thumbnail() and friends.
+  - Fixed various memory leaks.
+
+Internal changes:
+
+  - Now requires a C++ 11 capable compiler.
+  - Remove most of boost that is in C++11.
+  - Fixed warnings.
+  - De-recursify the build system.
+  - Support to load MakerNote IFD with test.
+  - Streamline the loading of IFDs.
+  - Move the rendering on the RawData class.
+  - BUG: IO::StreamClone::seek() now return the proper value.
+  - Bug 48429 - Remove shave for automake silent rules (with help from
+    Adrian Bunk).
+  - Bug 54224 - Remove debian packaging (Adrian Bunk).
+  - Bug 54229 - Remove .cvsignore (Adrian Bunk).
+  - Add libasan support for debugging.
+  - Fix IO::Stream tests.
+  - IO::Streams used shared_ptr<>
+  - New tracing/logging API.
+  - Use 16bits CRC for testsuite.
+  - Allow `make distscheck` to pass by disabling GNOME support.
+
+libopenraw 0.0.9 - 2011/11/13
+
+New features:
+
+  - Support (partially) PEF from Pentax K20D.
+  - Support for Olympus ORF big-endian files and "RS" (12-bits).
+    Added E-10, E-P1, E-620, SP350, SP500, SP510 and SP550.
+  - Support for Canon G10, G11, 7D, 1DMarkIV, 5DMarkII, 500D, 550D, 60D and 1000D.
+  - Support for Canon 50D (Closes #30846).
+  - Support for Nikon D3000.
+  - Support for Sony A-550.
+  - Support for Leica X1 DNG.
+  - Support for Ricoh GRX DNG.
+
+Bug fixes:
+
+  - Properly decompress CFA from Canon 7D, 5DMkII, 500D, 1DMkIV (and any
+    other whose JPEG stream have 4 components)
+  - Accept YCbCr when the compression is JPEG. The K10D DNG should now have
+    the large size preview.
+  - Install the GdkPixbuf in the right place. (Closes #29208) (Vincent Untz)
+  - Fixed overflow in the unpack_be12to16() and report errors.
+  - Fixed some compilation errors in the Gdk pixbuf loader.
+  - Fixed IDs for Canon 350D and 400D.
+  - Pass the orientation to gdk-pixbuf in the loader. (Closes #37920)
+
+Internal changes:
+
+  - Rename debug.{h,cpp} to trace.{h,cpp}
+  - Fixed the case on several class names.
+
+libopenraw 0.0.8 - 2009/05/15
+
+Bug fixes:
+
+  - includes missing for gcc 4.4
+  - Fix crash in or_get_file_extensions()
+
+libopenraw 0.0.7 - 2009/04/28
+
+Bug fixes:
+
+  - fix some warnings in the test and demo programs.
+  - fix a huge memory leak (Closes #21435) (Priit Laes)
+
+libopenraw 0.0.6 - 2009/02/21
+
+  - LICENSE change to LGPLv3+
+  - BUG: cfa output should write the data in PGM as big endian.
+  - BUG: added missing includes breaking on gcc 4.3 and other platforms.
+    (Closes bug #18243).
+  - BUG: better handling of Canon CR2 "slices" to fix crasher
+    with Canon 450D/Digital Rebel XSi files (and possibly others).
+  - NEW: API or_rawfile_new_from_memory() to load a Raw file from
+    a memory buffer.
+  - NEW: API or_rawfile_get_typeid() and the associated consts.
+  - NEW: API or_rawdata_get_minmax()
+  - NEW: API or_get_file_extensions()
+  - NEW: API or_rawfile_get_rendered_image() to get a rendered image.
+  - NEW: API or_bitmapdata_*()
+  - NEW: GdkPixbuf loader.
+  - NEW: Decompress NEF files.
+  - NEW: Python bindings.
+  - NEW: testsuite can be overridden with an override file.
+  - NEW: testsuite can be bootstrapped to download its files off
+    the internet.
+  - NEW: add shave to the build system for saner output.
+  - TODO: apply the coefficients.
+
+libopenraw 0.0.5 - 2008/02/26
+
+  - BUG: re-order commands in autogen.sh bug #14055
+  - BUG: IFDFileContainer inside another container was
+    failing because relative offsets were not used. Needed for
+    formats like RAF and MRW.
+  - BUG: testsuite didn't return a fail if a test failed, causing make check
+    to succeed even if test failed.
+  - BUG: in the use case CIFF (CRW) parsing could crash.
+  - BUG: JPEG thumbnails in CR2 where mistakenly recognized as 8RGB
+  - BUG: work around thumbnails in CR2 marked as JPEG but that really
+    are 8RGB (see Gnome bug #421175).
+  - BUG: decompressing CRW was reading past the buffer.
+  - NEW: testsuite now support doing checksum on data.
+  - NEW: support for Minolta MRW from Dimage 5, Dimage 7x, A1, A2, 5D
+    and 7D.
+  - NEW: API or_rawdata_get_cfa_pattern() to fetch the CFA pattern.
+  - NEW: Decompress/unpack RAW data from DNG uncompressed: Leica DMR,
+    Leica M8, Samsung GX-10 and Pro815, K10D, Ricoh GR-2)
+  - NEW: Decompress/unpack NEF RAW data from D1, D1X, D100, D2X.
+  - NEW: Unpack RAW data from Epson ERF R-D1 files.
+  - NEW: demo/thumbc output PPM if the thumbnail is 8RGB.
+  - NEW: demo/thumbc now allow -s to pass the thumbnail size wanted.
+
+libopenraw 0.0.4 - 2008/01/12
+
+  - NEW: support for Epson ERF.
+  - NEW: support getting the image orientation: CR2, CRW, PEF, NEF, ORF,
+    ARW, DNG.
+  - NEW: rawfile API.
+  - NEW: ordiag dump the thumbnail byte size.
+  - NEW: configurable testsuite (without sample files).
+  - BUG: missing include.
+  - BUG: fix compiler warnings.
+  - BUG: fix some compile failures. bug #13717
+  - BUG: fix crash on non-CIFF CRW file. bug #13393
+  - BUG: gdk demo shouldn't be compiled without Gnome support. bug #13718
+  - BUG: boost detection cleanup. bug #13658, bug #13659
+
+libopenraw 0.0.3 - 2007/11/25
+
+  - NEW: Decompress several formats: CR2, DNG and CRW.
+  - NEW: Added gdk pixbuf demo.
+  - BUG: fix crash if the file is not found. bug #13371
+  - BUG: fix memory bug in GdkPixbuf support. bug #13383
+
+libopenraw 0.0.2 - 2007/01/25
+
+  - Added GdkPixbuf support for Gnome
+  - No longer install libopenraw++ headers
+
+libopenraw 0.0.1 - 2006/12/09
+
+  - First release.
+	It features:
+	-C and C++ api
+	-Thumbnail extraction
+	-Supported file formats are: Canon CR2 and CRW,
+	Nikon NEF, Pentax PEF, Olympus ORF,
+	Adobe DNG, Sony ARW.
+
+
